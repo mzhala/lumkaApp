@@ -98,14 +98,28 @@ class FakeCallFragment : DialogFragment() {
 
         btnAccept.setOnClickListener {
             ringtone.stop()
-            Toast.makeText(requireContext(), "Call Answered", Toast.LENGTH_SHORT).show()
-            // You could switch to another fragment that looks like an ongoing call screen
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, OngoingCallFragment())
+                .addToBackStack(null) // so user can go back if needed
+                .commit()
+
+            dismiss() // close the FakeCallFragment
         }
 
         btnReject.setOnClickListener {
             ringtone.stop()
-            Toast.makeText(requireContext(), "Call Rejected", Toast.LENGTH_SHORT).show()
-            requireActivity().supportFragmentManager.popBackStack()
+            //Toast.makeText(requireContext(), "Call Rejected", Toast.LENGTH_SHORT).show()
+
+            dismiss() // This closes the DialogFragment properly
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, DangerAlertsFragment())
+                .addToBackStack(null) // optional
+                .commit()
+
+            // Update BottomNavigationView menu if needed
+            val bottomNav = requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation)
+            bottomNav?.menu?.findItem(R.id.nav_danger_alert)?.isChecked = true
+            //dismiss() // This closes the DialogFragment properly
         }
 
         return view

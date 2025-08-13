@@ -41,12 +41,12 @@ class MainActivity : AppCompatActivity() {
         val bottomNavigation: BottomNavigationView = findViewById(R.id.bottom_navigation)
 
         // Set default fragment
-        replaceFragment(FakeCallFragment)
+        replaceFragment(DangerAlertsFragment)
 
         bottomNavigation.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.nav_fake_call -> replaceFragment(FakeCallFragment)
                 R.id.nav_danger_alert -> replaceFragment(DangerAlertsFragment)
+                R.id.nav_fake_call -> replaceFragment(FakeCallFragment)
                 R.id.nav_sos -> replaceFragment(SOSFragment)
                 R.id.nav_location_status -> replaceFragment(LocationStatusFragment)
                 R.id.nav_nortification -> replaceFragment(NortificationsFragment)
