@@ -3,6 +3,10 @@ package com.example.lumka_app
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.media.Ringtone
+import android.media.RingtoneManager
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,9 +15,11 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.budgettracker.adapter.TransactionAdapter
@@ -33,6 +39,7 @@ import java.util.Locale
 import java.util.Calendar
 import androidx.viewpager2.widget.ViewPager2
 import com.example.lumka_app.adapter.ImageAdapter
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -46,108 +53,70 @@ private const val ARG_PARAM2 = "param2"
  * Use the [DashboardFrag.newInstance] factory method to
  * create an instance of this fragment.
  */
-class FakeCallFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-    private lateinit var displayName: TextView
-    private lateinit var displayEmail: TextView
-    private lateinit var initials: TextView
-    private lateinit var auth: FirebaseAuth
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: TransactionAdapter
-    private val transactions = mutableListOf<Transaction>()
-    private lateinit var incomeTextView: TextView
-    private lateinit var expenseTextView: TextView
-    private lateinit var avgExpenseTextView: TextView
-    private lateinit var budgetTextView: TextView
+class FakeCallFragment : DialogFragment() {
+    private lateinit var ringtone: Ringtone
+
+    override fun onStart() {
+        super.onStart()
+        dialog?.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.MATCH_PARENT
+        )
+        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.BLACK))
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+        // Make the DialogFragment fullscreen without title
+        setStyle(STYLE_NO_TITLE, android.R.style.Theme_Black_NoTitleBar_Fullscreen)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        fetchUserDetails()
+    override fun onResume() {
+        super.onResume()
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation)?.visibility = View.GONE
     }
 
-    @SuppressLint("MissingInflatedId", "CutPasteId", "SetTextI18n")
+    override fun onPause() {
+        super.onPause()
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation)?.visibility = View.VISIBLE
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
+
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_fake_call, container, false)
 
-        val viewPager: ViewPager2 = view.findViewById(R.id.viewPager)
-        val tabLayout: TabLayout = view.findViewById(R.id.tabLayout)
+        val btnAccept = view.findViewById<ImageButton>(R.id.btnAccept)
+        val btnReject = view.findViewById<ImageButton>(R.id.btnReject)
 
-        val images = listOf(R.drawable.fake_call_d1, R.drawable.fake_call_d2, R.drawable.fake_call_d3, R.drawable.fake_call_d4)
-        val adapter = ImageAdapter(images)
-        viewPager.adapter = adapter
+        // Play ringtone
+        val uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE)
+        ringtone = RingtoneManager.getRingtone(requireContext(), uri)
+        ringtone.play()
 
-        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-            // No setup needed here for dots
-        }.attach()
+        btnAccept.setOnClickListener {
+            ringtone.stop()
+            Toast.makeText(requireContext(), "Call Answered", Toast.LENGTH_SHORT).show()
+            // You could switch to another fragment that looks like an ongoing call screen
+        }
 
-        displayName = view.findViewById(R.id.displayName)
-        displayEmail = view.findViewById(R.id.displayEmail)
-        initials = view.findViewById(R.id.initial)
+        btnReject.setOnClickListener {
+            ringtone.stop()
+            Toast.makeText(requireContext(), "Call Rejected", Toast.LENGTH_SHORT).show()
+            requireActivity().supportFragmentManager.popBackStack()
+        }
 
-        // Fetch and display user details (this will update these views)
-        fetchUserDetails()
         return view
     }
 
-    fun fetchCategories(userId: String, onResult: (List<Category>) -> Unit) {
-        val ref = FirebaseDatabase.getInstance().getReference("categories")
-        ref.orderByChild("userId").equalTo(userId)
-            .addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    val categories = mutableListOf<Category>()
-                    for (child in snapshot.children) {
-                        val category = child.getValue(Category::class.java)
-                        category?.let { categories.add(it) }
-                    }
-                    onResult(categories)
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    onResult(emptyList())
-                }
-            })
+    override fun onDestroyView() {
+        super.onDestroyView()
+        if (ringtone.isPlaying) {
+            ringtone.stop()
+        }
     }
 
-    fun getFirstCharacter(username: String?): String {
-        return username?.firstOrNull()?.toString() ?: ""
-    }
 
-    private fun fetchUserDetails() {
-        auth = FirebaseAuth.getInstance();
-        val userId = auth.currentUser!!.uid
-        val database = FirebaseDatabase.getInstance()
-        val userRef: DatabaseReference = database.getReference("users").child(userId)
-
-        // Show a loading indicator if needed
-        userRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val username = snapshot.child("username").getValue(String::class.java)
-                val email = snapshot.child("email").getValue(String::class.java)
-
-                // Update UI with user data
-                displayName.text = username ?: "No username"
-                displayEmail.text = email ?: "No email"
-                initials.text = getFirstCharacter(username) ?: "No email"
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                displayName.text = "Username"
-                displayEmail.text = ""
-            }
-        })
-    }
 }

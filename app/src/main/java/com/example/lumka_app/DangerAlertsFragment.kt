@@ -47,107 +47,19 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class DangerAlertsFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-    private lateinit var displayName: TextView
-    private lateinit var displayEmail: TextView
-    private lateinit var initials: TextView
-    private lateinit var auth: FirebaseAuth
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: TransactionAdapter
-    private val transactions = mutableListOf<Transaction>()
-    private lateinit var incomeTextView: TextView
-    private lateinit var expenseTextView: TextView
-    private lateinit var avgExpenseTextView: TextView
-    private lateinit var budgetTextView: TextView
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var alertTitleTextView: TextView
+    private lateinit var alertMessageTextView: TextView
+    private lateinit var sendAlertButton: Button
+    // add other views here as needed
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        fetchUserDetails()
-    }
-
-    @SuppressLint("MissingInflatedId", "CutPasteId", "SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_fake_call, container, false)
+        // Inflate the layout
+        val view = inflater.inflate(R.layout.fragment_danger_alerts, container, false)
 
-        val viewPager: ViewPager2 = view.findViewById(R.id.viewPager)
-        val tabLayout: TabLayout = view.findViewById(R.id.tabLayout)
-
-        val images = listOf(R.drawable.fake_call_d1, R.drawable.fake_call_d2, R.drawable.fake_call_d3, R.drawable.fake_call_d4)
-        val adapter = ImageAdapter(images)
-        viewPager.adapter = adapter
-
-        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-            // No setup needed here for dots
-        }.attach()
-
-        displayName = view.findViewById(R.id.displayName)
-        displayEmail = view.findViewById(R.id.displayEmail)
-        initials = view.findViewById(R.id.initial)
-
-        // Fetch and display user details (this will update these views)
-        fetchUserDetails()
         return view
-    }
-
-    fun fetchCategories(userId: String, onResult: (List<Category>) -> Unit) {
-        val ref = FirebaseDatabase.getInstance().getReference("categories")
-        ref.orderByChild("userId").equalTo(userId)
-            .addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    val categories = mutableListOf<Category>()
-                    for (child in snapshot.children) {
-                        val category = child.getValue(Category::class.java)
-                        category?.let { categories.add(it) }
-                    }
-                    onResult(categories)
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    onResult(emptyList())
-                }
-            })
-    }
-
-    fun getFirstCharacter(username: String?): String {
-        return username?.firstOrNull()?.toString() ?: ""
-    }
-
-    private fun fetchUserDetails() {
-        auth = FirebaseAuth.getInstance();
-        val userId = auth.currentUser!!.uid
-        val database = FirebaseDatabase.getInstance()
-        val userRef: DatabaseReference = database.getReference("users").child(userId)
-
-        // Show a loading indicator if needed
-        userRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val username = snapshot.child("username").getValue(String::class.java)
-                val email = snapshot.child("email").getValue(String::class.java)
-
-                // Update UI with user data
-                displayName.text = username ?: "No username"
-                displayEmail.text = email ?: "No email"
-                initials.text = getFirstCharacter(username) ?: "No email"
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                displayName.text = "Username"
-                displayEmail.text = ""
-            }
-        })
     }
 }
