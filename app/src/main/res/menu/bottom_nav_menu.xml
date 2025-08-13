@@ -3,16 +3,16 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-
+    <item
+        android:id="@+id/nav_fake_call"
+        android:title="@string/fake_call"
+        android:icon="@drawable/ic_fake_call" />
     <item
         android:id="@+id/nav_danger_alert"
         android:title="@string/danger_alert"
         android:icon="@drawable/ic_danger_alert"/>
 
-    <item
-        android:id="@+id/nav_fake_call"
-        android:title="@string/fake_call"
-        android:icon="@drawable/ic_fake_call" />
+
 
     <item
         android:id="@+id/nav_sos"

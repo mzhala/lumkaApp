@@ -43,6 +43,9 @@ class MainActivity : AppCompatActivity() {
         // Set default fragment
         replaceFragment(DangerAlertsFragment)
 
+        // Auto-check the corresponding menu item
+        bottomNavigation.menu.findItem(R.id.nav_danger_alert).isChecked = true
+
         bottomNavigation.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_danger_alert -> replaceFragment(DangerAlertsFragment)
