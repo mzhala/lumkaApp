@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "408367446123",
+    "project_id": "lumka-app",
+    "storage_bucket": "lumka-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:408367446123:android:c51cf2308dd66ced00992e",
+        "android_client_info": {
+          "package_name": "com.example.lumka_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCWXnbfwAJL3lW4oDxFMAISdq6qLOBEZ1w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

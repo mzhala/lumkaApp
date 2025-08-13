@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:padding="30dp"
+    android:background="#BBF0AE"
+    tools:context=".RegisterActivity">
+
+
+    <androidx.cardview.widget.CardView
+        app:cardCornerRadius="15dp"
+        app:cardElevation="4dp"
+        app:cardBackgroundColor="#1E442F"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:padding="20dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:text="Name:"
+                    android:textColor="#BBF0AE"
+                    android:layout_marginBottom="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <EditText
+                    android:padding="5dp"
+                    android:id="@+id/registerName"
+                    android:hint="Enter name..."
+                    android:background="@drawable/input"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:text="Email:"
+                    android:textColor="#BBF0AE"
+                    android:layout_marginBottom="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <EditText
+                    android:padding="5dp"
+                    android:hint="Enter email..."
+                    android:id="@+id/registerEmail"
+                    android:background="@drawable/input"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:text="Password:"
+                    android:textColor="#BBF0AE"
+                    android:layout_marginBottom="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <EditText
+                    android:hint="Enter password..."
+                    android:padding="5dp"
+                    android:maxLength="8"
+                    android:id="@+id/registerPassword"
+                    android:inputType="textPassword"
+                    android:background="@drawable/input"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    tools:ignore="LabelFor" />
+
+            </LinearLayout>
+
+            <Button
+                android:text="Sign-Up"
+                android:onClick="registerUser"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/button"
+                android:textColor="@color/background_color"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_weight="1"
+                    android:textColor="@color/white"
+                    android:text="Already have an account?"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:textColor="@android:color/holo_blue_dark"
+                    android:text="Sign-in"
+                    android:onClick="singUp"
+                    android:layout_width="50dp"
+                    android:layout_height="48dp"/>
+            </LinearLayout>
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone" />
+
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:text="Or sign-up with"
+        android:layout_marginTop="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:src="@drawable/google"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
+            android:src="@drawable/facebook"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:src="@drawable/linkedin"
+            android:layout_width="48dp"
+            android:layout_height="40dp"/>
+
+    </LinearLayout>
+
+</LinearLayout>
