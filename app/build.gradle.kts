@@ -68,5 +68,8 @@ dependencies {
     implementation("com.google.android.material:material:1.9.0")  // for TabLayout
     implementation("com.google.android.gms:play-services-maps:18.1.0")
     implementation("com.google.android.gms:play-services-location:21.0.1")
+    implementation("com.google.android.gms:play-services-auth:20.6.0")
+    implementation("com.google.firebase:firebase-auth-ktx:22.3.0")
+
 
 }

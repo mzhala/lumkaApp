@@ -8,14 +8,14 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:padding="30dp"
-    android:background="#BBF0AE"
+    android:background="@color/secondary_color"
     tools:context=".RegisterActivity">
 
 
     <androidx.cardview.widget.CardView
         app:cardCornerRadius="15dp"
         app:cardElevation="4dp"
-        app:cardBackgroundColor="#1E442F"
+        app:cardBackgroundColor="@color/background_color"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -34,7 +34,7 @@
 
                 <TextView
                     android:text="Name:"
-                    android:textColor="#BBF0AE"
+                    android:textColor="@color/text_color"
                     android:layout_marginBottom="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
@@ -57,7 +57,7 @@
 
                 <TextView
                     android:text="Email:"
-                    android:textColor="#BBF0AE"
+                    android:textColor="@color/text_color"
                     android:layout_marginBottom="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
@@ -80,7 +80,7 @@
 
                 <TextView
                     android:text="Password:"
-                    android:textColor="#BBF0AE"
+                    android:textColor="@color/text_color"
                     android:layout_marginBottom="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
@@ -157,18 +157,6 @@
             android:src="@drawable/google"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
-
-        <ImageView
-            android:layout_marginEnd="20dp"
-            android:layout_marginStart="20dp"
-            android:src="@drawable/facebook"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <ImageView
-            android:src="@drawable/linkedin"
-            android:layout_width="48dp"
-            android:layout_height="40dp"/>
 
     </LinearLayout>
 

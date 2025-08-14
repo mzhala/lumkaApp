@@ -83,29 +83,4 @@
 
     </LinearLayout>
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/viewPager"
-        android:layout_width="match_parent"
-        android:layout_height="200dp" />
-
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="10dp"
-        app:tabIndicatorColor="@color/background_color"
-        app:tabIndicatorHeight="4dp"
-        app:tabSelectedTextColor="#FF0000"
-        app:tabTextColor="@color/white"
-        app:tabBackground="@color/light_blue_600"
-        android:layout_gravity="center" />
-
-    <androidx.cardview.widget.CardView
-        android:layout_marginStart="1dp"
-        android:layout_marginEnd="1dp"
-        app:cardBackgroundColor="@color/background_color"
-        app:cardCornerRadius="10dp"
-        android:layout_marginTop="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
 </LinearLayout>

@@ -1,20 +1,23 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
+    android:gravity="center_horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="15dp">
+    android:padding="16dp"
+    android:layout_marginTop="30dp"
+    android:layout_marginBottom="100dp">
 
+    <!-- header -->
     <LinearLayout
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="15dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <androidx.cardview.widget.CardView
-            app:cardBackgroundColor="@color/screamin_green"
+            app:cardBackgroundColor="@color/secondary_color"
             app:cardCornerRadius="99dp"
             app:cardElevation="4dp"
             android:layout_width="45dp"
@@ -42,7 +45,6 @@
         <LinearLayout
             android:layout_marginStart="10dp"
             android:orientation="vertical"
-            android:layout_gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -68,44 +70,84 @@
 
     </LinearLayout>
 
-    <!-- title -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="SOS Call"
-            android:id="@+id/title"/>
-
-    </LinearLayout>
-
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/viewPager"
-        android:layout_width="match_parent"
-        android:layout_height="200dp" />
-
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="10dp"
-        app:tabIndicatorColor="@color/background_color"
-        app:tabIndicatorHeight="4dp"
-        app:tabSelectedTextColor="#FF0000"
-        app:tabTextColor="@color/white"
-        app:tabBackground="@color/light_blue_600"
-        android:layout_gravity="center" />
-
+    <!-- Countdown Text -->
     <androidx.cardview.widget.CardView
-        android:layout_marginStart="1dp"
-        android:layout_marginEnd="1dp"
-        app:cardBackgroundColor="@color/background_color"
-        app:cardCornerRadius="10dp"
+        app:cardBackgroundColor="@color/emergency_background"
+        app:cardCornerRadius="99dp"
+        app:cardElevation="4dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp">
+        <LinearLayout
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/tvCountdown"
+                android:text="5"
+                android:textSize="50sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="0dp"
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:layout_height="match_parent"
+                android:textColor="@color/white"/>
+
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+    <!-- Cancel Button -->
+    <Button
+        android:id="@+id/btnCancel"
+        android:text="Cancel Call"
+        android:layout_marginBottom="12dp"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:background="@drawable/button_background_secondary_color"/>
+
+    <!-- Search Box -->
+    <EditText
+        android:id="@+id/etSearch"
+        android:hint="Search contact..."
+        android:layout_marginBottom="12dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
+    <!-- Dynamic Emergency Contact Buttons -->
+    <LinearLayout
+        android:id="@+id/contactsContainer"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center_horizontal"/>
+
+    <!-- Last Row -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btnChangeMain"
+            android:text="Change Main Contact"
+            android:layout_marginEnd="8dp"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_view_rounded_single"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabAddContact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_add"
+            android:contentDescription="Add Emergency Contact"
+            app:backgroundTint="@color/dark_cyan"
+            app:tint="@android:color/white"
+            app:fabSize="normal"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="16dp"/>
+
+    </LinearLayout>
 </LinearLayout>

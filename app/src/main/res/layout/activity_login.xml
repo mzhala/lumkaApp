@@ -8,13 +8,13 @@
     android:orientation="vertical"
     android:gravity="center"
     android:padding="30dp"
-    android:background="#BBF0AE"
+    android:background="@color/secondary_color"
     tools:context=".LoginActivity">
 
     <androidx.cardview.widget.CardView
         app:cardCornerRadius="15dp"
         app:cardElevation="4dp"
-        app:cardBackgroundColor="#1E442F"
+        app:cardBackgroundColor="@color/background_color"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -26,7 +26,7 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:src="@drawable/logo"
+                android:src="@drawable/logo_2"
                 android:layout_width="80dp"
                 android:layout_height="80dp"/>
 
@@ -50,11 +50,11 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:text="Email:"
-                    android:textColor="#BBF0AE"
-                    android:layout_marginBottom="5dp"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:text="Email:"
+                    android:textColor="@color/text_color" />
 
                 <EditText
                     android:padding="5dp"
@@ -74,7 +74,7 @@
 
                 <TextView
                     android:text="Password:"
-                    android:textColor="#BBF0AE"
+                    android:textColor="@color/text_color"
                     android:layout_marginBottom="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
@@ -101,6 +101,7 @@
                     android:text="Remember me"
                     android:layout_weight="1"
                     android:textColor="@color/white"
+                    android:buttonTint="@color/white"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"/>
 

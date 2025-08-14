@@ -54,13 +54,6 @@ class NortificationsFragment : Fragment() {
     private lateinit var displayEmail: TextView
     private lateinit var initials: TextView
     private lateinit var auth: FirebaseAuth
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: TransactionAdapter
-    private val transactions = mutableListOf<Transaction>()
-    private lateinit var incomeTextView: TextView
-    private lateinit var expenseTextView: TextView
-    private lateinit var avgExpenseTextView: TextView
-    private lateinit var budgetTextView: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,7 +65,6 @@ class NortificationsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        fetchUserDetails()
     }
 
     @SuppressLint("MissingInflatedId", "CutPasteId", "SetTextI18n")
@@ -80,74 +72,53 @@ class NortificationsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_fake_call, container, false)
+        val v = inflater.inflate(R.layout.fragment_nortifications, container, false)
+        auth = FirebaseAuth.getInstance()
 
-        val viewPager: ViewPager2 = view.findViewById(R.id.viewPager)
-        val tabLayout: TabLayout = view.findViewById(R.id.tabLayout)
+        // --- UI ---
+        displayName = v.findViewById(R.id.displayName)
+        displayEmail = v.findViewById(R.id.displayEmail)
+        initials = v.findViewById(R.id.initial)
 
-        val images = listOf(R.drawable.fake_call_d1, R.drawable.fake_call_d2, R.drawable.fake_call_d3, R.drawable.fake_call_d4)
-        val adapter = ImageAdapter(images)
-        viewPager.adapter = adapter
-
-        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-            // No setup needed here for dots
-        }.attach()
-
-        displayName = view.findViewById(R.id.displayName)
-        displayEmail = view.findViewById(R.id.displayEmail)
-        initials = view.findViewById(R.id.initial)
-
-        // Fetch and display user details (this will update these views)
+        // Fetch and display user details AFTER views are initialized
         fetchUserDetails()
-        return view
+
+        return v
     }
 
-    fun fetchCategories(userId: String, onResult: (List<Category>) -> Unit) {
-        val ref = FirebaseDatabase.getInstance().getReference("categories")
-        ref.orderByChild("userId").equalTo(userId)
-            .addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    val categories = mutableListOf<Category>()
-                    for (child in snapshot.children) {
-                        val category = child.getValue(Category::class.java)
-                        category?.let { categories.add(it) }
-                    }
-                    onResult(categories)
-                }
 
-                override fun onCancelled(error: DatabaseError) {
-                    onResult(emptyList())
-                }
-            })
-    }
 
     fun getFirstCharacter(username: String?): String {
         return username?.firstOrNull()?.toString() ?: ""
     }
 
     private fun fetchUserDetails() {
-        auth = FirebaseAuth.getInstance();
-        val userId = auth.currentUser!!.uid
+        auth = FirebaseAuth.getInstance()
+        val userId = auth.currentUser?.uid ?: return
         val database = FirebaseDatabase.getInstance()
         val userRef: DatabaseReference = database.getReference("users").child(userId)
 
-        // Show a loading indicator if needed
         userRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val username = snapshot.child("username").getValue(String::class.java)
                 val email = snapshot.child("email").getValue(String::class.java)
 
-                // Update UI with user data
-                displayName.text = username ?: "No username"
-                displayEmail.text = email ?: "No email"
-                initials.text = getFirstCharacter(username) ?: "No email"
+                // Only update UI if the fragment is still added and views are initialized
+                if (isAdded && ::displayName.isInitialized && ::displayEmail.isInitialized && ::initials.isInitialized) {
+                    displayName.text = username ?: "No username"
+                    displayEmail.text = email ?: "No email"
+                    initials.text = getFirstCharacter(username)
+                }
             }
 
             override fun onCancelled(error: DatabaseError) {
-                displayName.text = "Username"
-                displayEmail.text = ""
+                if (isAdded && ::displayName.isInitialized && ::displayEmail.isInitialized) {
+                    displayName.text = "Username"
+                    displayEmail.text = ""
+                }
             }
         })
     }
+
+
 }
