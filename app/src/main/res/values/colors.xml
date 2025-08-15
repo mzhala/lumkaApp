@@ -9,6 +9,8 @@
     <!--<color name="secondary_color">#BE79AD</color>-->
     <color name="third_color">#932F6D</color>
     <color name="forth_color">#2892D7</color>
+
+    <color name="fifth_color">#BE79AD</color>
     <color name="screamin_green">#BBF0AE</color>
     <color name="lightgrey">#DDDDDD</color>
     <color name="text_color">#BBF0AE</color>
@@ -24,6 +26,6 @@
     <color name="light_gray_header_color">#646663</color>
     <color name="black_blue">#222531 </color>
     <color name="dark_grey_blue">#323645  </color>
-    <color name="emergency_background">#C23B22  </color>
+    <color name="emergency_background">#FF6961  </color>
     <color name="dark_cyan">#008577  </color>
 </resources>

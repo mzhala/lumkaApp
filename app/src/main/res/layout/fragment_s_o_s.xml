@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    android:layout_marginTop="30dp"
     android:layout_marginBottom="100dp">
 
     <!-- header -->
@@ -14,7 +13,8 @@
         android:layout_marginBottom="15dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:visibility="gone">
 
         <androidx.cardview.widget.CardView
             app:cardBackgroundColor="@color/secondary_color"
@@ -103,7 +103,7 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:textColor="@color/secondary_color"
+        android:textColor="@color/white"
         android:background="@drawable/button_background_color"/>
 
     <!-- Search Box -->
@@ -112,43 +112,30 @@
         android:hint="Search contact..."
         android:layout_marginBottom="12dp"
         android:layout_width="match_parent"
+        android:imeOptions="actionDone"
         android:layout_height="40dp"
         android:padding="5dp"
         android:background="@drawable/input"/>
 
     <!-- Dynamic Emergency Contact Buttons -->
-    <LinearLayout
-        android:id="@+id/contactsContainer"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="center_horizontal">
 
-        <!-- RecyclerView -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvContacts"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="100dp"
-            android:layout_marginTop="12dp"
-            android:nestedScrollingEnabled="false"/>
-    </LinearLayout>
+
+    <!-- RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvContacts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="100dp"
+        android:layout_marginTop="12dp"
+        android:nestedScrollingEnabled="false"/>
+
 
     <!-- Last Row -->
     <LinearLayout
         android:orientation="horizontal"
-        android:gravity="center"
+        android:gravity="right"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
-        <Button
-            android:id="@+id/btnChangeMain"
-            android:text="Change Main Contact"
-            android:layout_marginEnd="8dp"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/background_view_rounded_single"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabAddContact"

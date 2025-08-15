@@ -41,7 +41,7 @@ class EmergencyContactAdapter(
             )
         } else {
             holder.tvName.setCompoundDrawablesWithIntrinsicBounds(
-                android.R.drawable.btn_star_big_off, 0, 0, 0
+                0, 0, 0, 0
             )
         }
         holder.btnSetMain.setOnClickListener { onSetMainClick(contact) }

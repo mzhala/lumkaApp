@@ -30,11 +30,15 @@ class OngoingCallFragment : DialogFragment() {
     override fun onResume() {
         super.onResume()
         requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation)?.visibility = View.GONE
+        // Hide header
+        requireActivity().findViewById<View>(R.id.main_header)?.visibility = View.GONE
     }
 
     override fun onPause() {
         super.onPause()
         requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation)?.visibility = View.VISIBLE
+        // Restore header
+        requireActivity().findViewById<View>(R.id.main_header)?.visibility = View.VISIBLE
     }
 
     override fun onCreateView(

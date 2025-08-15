@@ -60,6 +60,7 @@
                     android:padding="5dp"
                     android:id="@+id/loginEmail"
                     android:hint="Enter email..."
+                    android:imeOptions="actionDone"
                     android:background="@drawable/input"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"/>
@@ -84,6 +85,7 @@
                     android:padding="5dp"
                     android:maxLength="8"
                     android:id="@+id/passwordLogin"
+                    android:imeOptions="actionDone"
                     android:inputType="textPassword"
                     android:background="@drawable/input"
                     android:layout_width="match_parent"
@@ -148,25 +150,11 @@
 
     </androidx.cardview.widget.CardView>
 
-    <TextView
-        android:text="Or sign-in with"
-        android:layout_marginTop="15dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
     <LinearLayout
         android:layout_marginTop="10dp"
         android:orientation="horizontal"
         android:gravity="center_horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:src="@drawable/google"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-
-    </LinearLayout>
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>
