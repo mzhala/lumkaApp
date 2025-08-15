@@ -29,6 +29,15 @@
         android:textSize="16sp"
         android:paddingLeft="8dp" />
 
+    <ImageButton
+        android:id="@+id/btnSetMain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@android:drawable/btn_star_big_off"
+        android:backgroundTint="@color/white"
+        android:contentDescription="Set as main contact"/>
+
+
 
 
 </LinearLayout>

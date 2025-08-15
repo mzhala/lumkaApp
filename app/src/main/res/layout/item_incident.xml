@@ -10,7 +10,7 @@
     android:background="@drawable/background_view_rounded_single">
 
     <androidx.cardview.widget.CardView
-        app:cardBackgroundColor="@color/secondary_color"
+        app:cardBackgroundColor="@color/light_gray_header_color"
         app:cardCornerRadius="99dp"
         app:cardElevation="4dp"
         android:layout_width="30dp"

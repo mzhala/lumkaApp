@@ -7,6 +7,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.view.View
 import android.widget.*
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
@@ -106,13 +107,40 @@ class SOSFragment : Fragment() {
         return mainContact ?: contacts.minByOrNull { it.timestamp } // oldest contact
     }
 
-    private fun setupRecyclerView(view: android.view.View) {
+    private fun setupRecyclerView(view: View) {
         val rvContacts = view.findViewById<RecyclerView>(R.id.rvContacts)
-        adapter = EmergencyContactAdapter(requireContext(), contacts) { contact ->
-            makePhoneCall(contact.phoneNumber)
-        }
+        adapter = EmergencyContactAdapter(
+            requireContext(),
+            contacts,
+            onCallClick = { contact ->
+                makePhoneCall(contact.phoneNumber)
+            },
+            onSetMainClick = { contact ->
+                setMainContact(contact)
+            }
+        )
         rvContacts.layoutManager = LinearLayoutManager(requireContext())
         rvContacts.adapter = adapter
+    }
+
+
+
+
+
+    private fun setMainContact(contact: EmergencyContact) {
+        val userId = auth.currentUser?.uid ?: return
+        val ref = FirebaseDatabase.getInstance().getReference("emergency_contacts").child(userId)
+
+        // First, unset any existing main contact
+        contacts.forEach { it.isMain = it.id == contact.id }
+
+        // Update all contacts in Firebase
+        contacts.forEach { c ->
+            c.id?.let { ref.child(it).child("isMain").setValue(c.isMain) }
+        }
+
+        adapter.updateList(contacts)
+        Toast.makeText(requireContext(), "${contact.name} is now the main contact", Toast.LENGTH_SHORT).show()
     }
 
     private fun fetchContacts() {
