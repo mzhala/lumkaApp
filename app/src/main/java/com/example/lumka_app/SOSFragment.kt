@@ -1,77 +1,42 @@
 package com.example.lumka_app
 
-
-import android.annotation.SuppressLint
+import android.Manifest
 import android.app.AlertDialog
+import android.content.pm.PackageManager
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.os.CountDownTimer
+import android.widget.*
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Spinner
-import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.budgettracker.adapter.TransactionAdapter
-import com.example.lumka_app.model.Category
-import com.example.lumka_app.model.MonthlyBudget
-import com.example.lumka_app.model.Transaction
 import com.example.lumka_app.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
-import java.text.SimpleDateFormat
-import java.util.Locale
-import java.util.Calendar
-import androidx.viewpager2.widget.ViewPager2
-import com.example.lumka_app.adapter.ImageAdapter
-import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayoutMediator
+import com.google.firebase.database.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [DashboardFrag.newInstance] factory method to
- * create an instance of this fragment.
- */
 class SOSFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
     private lateinit var displayName: TextView
     private lateinit var displayEmail: TextView
     private lateinit var initials: TextView
     private lateinit var auth: FirebaseAuth
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var tvCountdown: TextView
+    private lateinit var btnCancelCall: Button
+    private var countdownTimer: CountDownTimer? = null
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-    }
+    private lateinit var adapter: EmergencyContactAdapter
+    private val contacts = mutableListOf<EmergencyContact>()
 
-    @SuppressLint("MissingInflatedId", "CutPasteId", "SetTextI18n")
+    private val CALL_PHONE_PERMISSION = 1
+
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: android.view.LayoutInflater, container: android.view.ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): android.view.View? {
         val v = inflater.inflate(R.layout.fragment_s_o_s, container, false)
         auth = FirebaseAuth.getInstance()
 
@@ -79,46 +44,175 @@ class SOSFragment : Fragment() {
         displayName = v.findViewById(R.id.displayName)
         displayEmail = v.findViewById(R.id.displayEmail)
         initials = v.findViewById(R.id.initial)
+        tvCountdown = v.findViewById(R.id.tvCountdown)
+        btnCancelCall = v.findViewById(R.id.btnCancelCall)
+        val defaultContact = getDefaultContact()
+        defaultContact?.let { makePhoneCall(it.phoneNumber) }
 
-        // Fetch and display user details AFTER views are initialized
+        btnCancelCall.setOnClickListener {
+            countdownTimer?.cancel()
+            tvCountdown.text = "Call cancelled"
+        }
+
+        // Request call permission on fragment launch
+        checkCallPermission()
+
         fetchUserDetails()
+        setupRecyclerView(v)
+        fetchContacts()  // Load contacts from Firebase
+
+        // FAB click
+        val fabAddContact = v.findViewById<FloatingActionButton>(R.id.fabAddContact)
+        fabAddContact.setOnClickListener {
+            showAddContactDialog()
+        }
 
         return v
     }
 
+    // Check and request CALL_PHONE permission
+    private fun checkCallPermission() {
+        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.CALL_PHONE)
+            != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(Manifest.permission.CALL_PHONE),
+                CALL_PHONE_PERMISSION
+            )
+        }
+    }
+
+    // Handle permission result
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == CALL_PHONE_PERMISSION) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(requireContext(), "Permission granted!", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(requireContext(), "Permission denied. Calls won't work.", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun getDefaultContact(): EmergencyContact? {
+        if (contacts.isEmpty()) return null
+        // Try to find the main contact first
+        val mainContact = contacts.find { it.isMain }
+        return mainContact ?: contacts.minByOrNull { it.timestamp } // oldest contact
+    }
+
+    private fun setupRecyclerView(view: android.view.View) {
+        val rvContacts = view.findViewById<RecyclerView>(R.id.rvContacts)
+        adapter = EmergencyContactAdapter(requireContext(), contacts) { contact ->
+            makePhoneCall(contact.phoneNumber)
+        }
+        rvContacts.layoutManager = LinearLayoutManager(requireContext())
+        rvContacts.adapter = adapter
+    }
+
+    private fun fetchContacts() {
+        val userId = auth.currentUser?.uid ?: return
+        val ref = FirebaseDatabase.getInstance().getReference("emergency_contacts").child(userId)
+        ref.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                contacts.clear()
+                for (child in snapshot.children) {
+                    val contact = child.getValue(EmergencyContact::class.java)
+                    contact?.let { contacts.add(it) }
+                }
+                adapter.updateList(contacts)
+
+                // Start countdown AFTER contacts are loaded
+                startCountdown()
+            }
+
+            override fun onCancelled(error: DatabaseError) {}
+        })
+    }
+
+    private fun startCountdown() {
+        val defaultContact = getDefaultContact()
+        if (defaultContact == null) {
+            tvCountdown.text = "No contacts available"
+            return
+        }
+
+        countdownTimer?.cancel() // cancel previous if any
+
+        countdownTimer = object : CountDownTimer(5000, 1000) { // 5-second countdown
+            override fun onTick(millisUntilFinished: Long) {
+                tvCountdown.text = "Calling ${defaultContact.name} in ${millisUntilFinished / 1000} sec"
+            }
+
+            override fun onFinish() {
+                makePhoneCall(defaultContact.phoneNumber)
+            }
+        }.start()
+    }
 
 
-    fun getFirstCharacter(username: String?): String {
-        return username?.firstOrNull()?.toString() ?: ""
+    private fun showAddContactDialog() {
+        val builder = AlertDialog.Builder(requireContext())
+        val view = layoutInflater.inflate(R.layout.dialog_add_contact, null)
+        val etName = view.findViewById<EditText>(R.id.etContactName)
+        val etPhone = view.findViewById<EditText>(R.id.etContactPhone)
+
+        builder.setView(view)
+            .setTitle("Add Contact")
+            .setPositiveButton("Add") { dialog, _ ->
+                val name = etName.text.toString()
+                val phone = etPhone.text.toString()
+                if (name.isNotEmpty() && phone.isNotEmpty()) {
+                    addEmergencyContact(name, phone)
+                }
+                dialog.dismiss()
+            }
+            .setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
+            .show()
+    }
+
+    private fun addEmergencyContact(name: String, phone: String) {
+        val userId = auth.currentUser?.uid ?: return
+        val ref = FirebaseDatabase.getInstance().getReference("emergency_contacts").child(userId)
+        val key = ref.push().key ?: return
+        val contact = EmergencyContact(id = key, userId = userId, name = name, phoneNumber = phone)
+        ref.child(key).setValue(contact).addOnSuccessListener {
+            Toast.makeText(requireContext(), "Contact added", Toast.LENGTH_SHORT).show()
+            contacts.add(contact)
+            adapter.updateList(contacts)
+        }
+    }
+
+    private fun makePhoneCall(number: String) {
+        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.CALL_PHONE)
+            != PackageManager.PERMISSION_GRANTED
+        ) {
+            checkCallPermission()
+            return
+        }
+        val callIntent = Intent(Intent.ACTION_CALL)
+        callIntent.data = Uri.parse("tel:$number")
+        startActivity(callIntent)
     }
 
     private fun fetchUserDetails() {
-        auth = FirebaseAuth.getInstance()
         val userId = auth.currentUser?.uid ?: return
-        val database = FirebaseDatabase.getInstance()
-        val userRef: DatabaseReference = database.getReference("users").child(userId)
-
+        val userRef = FirebaseDatabase.getInstance().getReference("users").child(userId)
         userRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val username = snapshot.child("username").getValue(String::class.java)
                 val email = snapshot.child("email").getValue(String::class.java)
-
-                // Only update UI if the fragment is still added and views are initialized
-                if (isAdded && ::displayName.isInitialized && ::displayEmail.isInitialized && ::initials.isInitialized) {
-                    displayName.text = username ?: "No username"
-                    displayEmail.text = email ?: "No email"
-                    initials.text = getFirstCharacter(username)
-                }
+                displayName.text = username ?: "No username"
+                displayEmail.text = email ?: "No email"
+                initials.text = username?.firstOrNull()?.toString() ?: ""
             }
 
-            override fun onCancelled(error: DatabaseError) {
-                if (isAdded && ::displayName.isInitialized && ::displayEmail.isInitialized) {
-                    displayName.text = "Username"
-                    displayEmail.text = ""
-                }
-            }
+            override fun onCancelled(error: DatabaseError) {}
         })
     }
-
-
 }

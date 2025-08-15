@@ -3,9 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.lumka_app">
     <!-- Required for Firebase and internet -->
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="false" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
 
 

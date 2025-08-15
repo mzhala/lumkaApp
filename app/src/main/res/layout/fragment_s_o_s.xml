@@ -75,8 +75,8 @@
         app:cardBackgroundColor="@color/emergency_background"
         app:cardCornerRadius="99dp"
         app:cardElevation="4dp"
-        android:layout_width="100dp"
-        android:layout_height="100dp">
+        android:layout_width="150dp"
+        android:layout_height="150dp">
         <LinearLayout
             android:gravity="center"
             android:layout_width="match_parent"
@@ -84,7 +84,7 @@
             <TextView
                 android:id="@+id/tvCountdown"
                 android:text="5"
-                android:textSize="50sp"
+                android:textSize="30sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="0dp"
                 android:layout_width="wrap_content"
@@ -97,21 +97,24 @@
     </androidx.cardview.widget.CardView>
     <!-- Cancel Button -->
     <Button
-        android:id="@+id/btnCancel"
+        android:id="@+id/btnCancelCall"
         android:text="Cancel Call"
         android:layout_marginBottom="12dp"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:background="@drawable/button_background_secondary_color"/>
+        android:textColor="@color/secondary_color"
+        android:background="@drawable/button_background_color"/>
 
     <!-- Search Box -->
     <EditText
-        android:id="@+id/etSearch"
+        android:id="@+id/etSearchContact"
         android:hint="Search contact..."
         android:layout_marginBottom="12dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="40dp"
+        android:padding="5dp"
+        android:background="@drawable/input"/>
 
     <!-- Dynamic Emergency Contact Buttons -->
     <LinearLayout
@@ -120,7 +123,17 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:gravity="center_horizontal"/>
+        android:gravity="center_horizontal">
+
+        <!-- RecyclerView -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvContacts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="100dp"
+            android:layout_marginTop="12dp"
+            android:nestedScrollingEnabled="false"/>
+    </LinearLayout>
 
     <!-- Last Row -->
     <LinearLayout
