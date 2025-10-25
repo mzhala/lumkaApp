@@ -1,6 +1,8 @@
 package com.example.lumka_app
 
 import android.annotation.SuppressLint
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -13,6 +15,11 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import android.view.View
+import android.view.WindowInsetsController
+import androidx.annotation.RequiresApi
+
+import androidx.appcompat.app.AppCompatDelegate
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,9 +36,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tvDisplayName: TextView
     private lateinit var tvDisplayEmail: TextView
 
+    @RequiresApi(Build.VERSION_CODES.R)
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
@@ -60,6 +69,7 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
+
     }
 
     private fun replaceFragment(fragment: Fragment) {
@@ -77,7 +87,11 @@ class MainActivity : AppCompatActivity() {
                 val username = snapshot.child("username").getValue(String::class.java)
                 val email = snapshot.child("email").getValue(String::class.java)
 
-                tvDisplayName.text = username ?: "No username"
+                tvDisplayName.text = if (username != null) {
+                    "Hi, $username"
+                } else {
+                    "Hi"
+                }
                 tvDisplayEmail.text = email ?: "No email"
                 tvInitial.text = username?.firstOrNull()?.toString() ?: ""
             }

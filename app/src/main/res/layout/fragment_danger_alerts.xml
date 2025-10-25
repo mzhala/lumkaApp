@@ -269,7 +269,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40sp"
                 android:orientation="horizontal"
                 android:layout_gravity="center_horizontal"
                 android:background="@drawable/background_view_rounded_single"
@@ -291,6 +291,7 @@
                     android:layout_height="30dp"
                     android:contentDescription="Select on Map"
                     android:padding="12dp"
+                    android:layout_gravity="center_vertical"
                     android:src="@drawable/ic_location_on"
                     android:background="@android:color/transparent"
                     app:tint="@color/dark_grey_blue" />
@@ -303,7 +304,7 @@
                 android:layout_height="wrap_content"
                 android:text="Location: not set"
                 android:gravity="center_vertical"
-                android:textColor="@color/dark_grey_blue"
+                android:textColor="@color/lightgrey"
                 android:paddingTop="8dp" />
 
         </LinearLayout>

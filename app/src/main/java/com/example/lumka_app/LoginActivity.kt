@@ -2,26 +2,17 @@ package com.example.lumka_app
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.View
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import android.widget.Button
 import android.widget.EditText
-import android.widget.Toast
-import com.example.lumka_app.R
+import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.api.ApiException
-import com.google.firebase.auth.GoogleAuthProvider
-
 
 class LoginActivity : AppCompatActivity() {
+
     private lateinit var auth: FirebaseAuth
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
@@ -33,7 +24,6 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         auth = FirebaseAuth.getInstance()
-
         emailEditText = findViewById(R.id.loginEmail)
         passwordEditText = findViewById(R.id.passwordLogin)
     }
@@ -50,7 +40,7 @@ class LoginActivity : AppCompatActivity() {
         if (email.isNotEmpty() && password.isNotEmpty()) {
             loginUser(email, password)
         } else {
-            Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show()
+            showPopupMessage("Missing Fields", "Please fill all fields before continuing.")
         }
     }
 
@@ -58,12 +48,46 @@ class LoginActivity : AppCompatActivity() {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
+                    showPopupMessage("Welcome Back", "Login successful!")
                     startActivity(Intent(this, MainActivity::class.java))
                     finish()
                 } else {
-                    Toast.makeText(this, "Login failed: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                    showPopupMessage(
+                        "Login Failed",
+                        task.exception?.message ?: "Please check your credentials and try again."
+                    )
                 }
             }
+    }
+
+    private fun showPopupMessage(title: String, message: String) {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(title)
+        builder.setMessage(message)
+        builder.setPositiveButton("Close") { dialog, _ -> dialog.dismiss() }
+
+        val dialog = builder.create()
+        dialog.show()
+
+        // Create rounded white background with 5dp corners
+        val background = GradientDrawable().apply {
+            shape = GradientDrawable.RECTANGLE
+            cornerRadius = 20f  // about 5dp corners
+            setColor(resources.getColor(android.R.color.white, theme))
+        }
+
+        dialog.window?.setBackgroundDrawable(background)
+
+        // Adjust dialog margins (≈20dp on each side)
+        val window = dialog.window
+        val params = window?.attributes
+        params?.width = (resources.displayMetrics.widthPixels * 0.9).toInt()
+        window?.attributes = params
+
+        // Change text and button colors to black
+        dialog.findViewById<android.widget.TextView>(android.R.id.message)
+            ?.setTextColor(resources.getColor(android.R.color.black, theme))
+        dialog.findViewById<android.widget.Button>(android.R.id.button1)
+            ?.setTextColor(resources.getColor(android.R.color.black, theme))
     }
 }

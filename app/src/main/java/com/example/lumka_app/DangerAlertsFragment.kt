@@ -10,6 +10,7 @@ import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
 import android.text.format.DateFormat
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -151,9 +152,11 @@ class DangerAlertsFragment : Fragment() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                displayName.text = "Username"
-                displayEmail.text = ""
+                Toast.makeText(requireContext(), "Failed to load incidents", Toast.LENGTH_SHORT).show()
+                Log.e("FirebaseError", "Error loading incidents: ${error.message}, Details: ${error.details}")
             }
+
+
         })
     }
 
@@ -379,7 +382,11 @@ class DangerAlertsFragment : Fragment() {
                                     inc.userInitial = username?.firstOrNull()?.toString() ?: "?"
                                     adapter.notifyItemChanged(list.indexOf(inc))
                                 }
-                                override fun onCancelled(error: DatabaseError) {}
+                                override fun onCancelled(error: DatabaseError) {
+                                    Log.e("Firebase", "Failed to load incidents: ${error.message} / ${error.code}")
+                                    Toast.makeText(requireContext(), "Failed to load incidents: ${error.message}", Toast.LENGTH_SHORT).show()
+                                }
+
                             })
                         }
 
@@ -410,8 +417,10 @@ class DangerAlertsFragment : Fragment() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(requireContext(), "Failed to load incidents", Toast.LENGTH_SHORT).show()
+                Log.e("Firebase", "Failed to load incidents: ${error.message} / ${error.code}")
+                Toast.makeText(requireContext(), "Failed to load incidents: ${error.message}", Toast.LENGTH_SHORT).show()
             }
+
         })
     }
 

@@ -33,7 +33,7 @@
             <TextView
                 android:text="Welcome"
                 android:textSize="20sp"
-                android:textColor="#BBF0AE"
+                android:textColor="@color/text_highlight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
@@ -57,13 +57,14 @@
                     android:textColor="@color/text_color" />
 
                 <EditText
-                    android:padding="5dp"
                     android:id="@+id/loginEmail"
                     android:hint="Enter email..."
-                    android:imeOptions="actionDone"
+                    android:inputType="textEmailAddress"
+                    android:imeOptions="actionNext"
                     android:background="@drawable/input"
+                    android:padding="5dp"
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"/>
+                    android:layout_height="48dp" />
 
             </LinearLayout>
 
@@ -120,7 +121,7 @@
                 android:text="Sign-in"
                 android:onClick="login"
                 android:background="@drawable/button"
-                android:textColor="@color/background_color"
+                android:textColor="@color/button_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 

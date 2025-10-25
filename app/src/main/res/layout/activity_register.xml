@@ -102,13 +102,13 @@
             </LinearLayout>
 
             <Button
-                android:text="Sign-Up"
-                android:onClick="registerUser"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/button"
-                android:textColor="@color/background_color"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:onClick="registerUser"
+                android:text="Sign-Up"
+                android:textColor="@color/button_text"/>
 
             <LinearLayout
                 android:layout_marginTop="10dp"

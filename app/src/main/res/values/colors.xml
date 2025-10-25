@@ -4,8 +4,11 @@
     <color name="white">#FFFFFFFF</color>
 
     <!--<color name="background_color">#400838</color>-->
-    <color name="background_color">#1E442F</color>
-    <color name="secondary_color">#BBF0AE</color>
+    <color name="background_color">#FF000000</color>
+    <color name="secondary_color">#1e1e1e</color>
+    <color name="button_background">#1e1e1e</color>
+    <color name="button_text">#F2F0EF</color>
+
     <!--<color name="secondary_color">#BE79AD</color>-->
     <color name="third_color">#932F6D</color>
     <color name="forth_color">#2892D7</color>
@@ -13,7 +16,9 @@
     <color name="fifth_color">#BE79AD</color>
     <color name="screamin_green">#BBF0AE</color>
     <color name="lightgrey">#DDDDDD</color>
-    <color name="text_color">#BBF0AE</color>
+    <color name="text_color">#F2F0EF</color>
+
+    <color name="text_highlight">#D9652C</color>
     <!--<color name="text_color">#BBF0AE</color> -->
     <color name="light_blue_600">#FF039BE5</color>
     <color name="light_blue_900">#FF01579B</color>
