@@ -7,80 +7,399 @@
     android:layout_height="match_parent"
     android:padding="15dp">
 
-    <LinearLayout
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="none">
 
-        <androidx.cardview.widget.CardView
-            app:cardBackgroundColor="@color/screamin_green"
-            app:cardCornerRadius="99dp"
-            app:cardElevation="4dp"
-            android:layout_width="45dp"
-            android:layout_height="45dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <LinearLayout
-                android:gravity="center"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
-                <TextView
-                    android:text="A"
-                    android:id="@+id/initial"
-                    android:textSize="28sp"
-                    android:textStyle="bold"
-                    android:layout_marginBottom="2dp"
-                    android:textColor="@color/white"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                <androidx.cardview.widget.CardView
+                    app:cardBackgroundColor="@color/screamin_green"
+                    app:cardCornerRadius="99dp"
+                    app:cardElevation="4dp"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp">
+
+                    <LinearLayout
+                        android:gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:text="A"
+                            android:id="@+id/initial"
+                            android:textSize="28sp"
+                            android:textStyle="bold"
+                            android:layout_marginBottom="2dp"
+                            android:textColor="@color/white"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <LinearLayout
+                    android:layout_marginStart="10dp"
+                    android:orientation="vertical"
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/displayName"
+                        android:textStyle="bold"
+                        android:textColor="@color/background_color"
+                        android:text="Username"
+                        android:layout_gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:id="@+id/displayEmail"
+                        android:text="user@gmail.com"
+                        android:textSize="10sp"
+                        android:layout_marginTop="2dp"
+                        android:layout_gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
-
-        <LinearLayout
-            android:layout_marginStart="10dp"
-            android:orientation="vertical"
-            android:layout_gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/displayName"
-                android:textStyle="bold"
-                android:textColor="@color/background_color"
-                android:text="Username"
-                android:layout_gravity="center"
+            <!-- title -->
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/displayEmail"
-                android:text="user@gmail.com"
-                android:textSize="10sp"
-                android:layout_marginTop="2dp"
-                android:layout_gravity="center"
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Safe Space"
+                    android:id="@+id/title"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:textSize="12sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Account information"/>
+
+                <LinearLayout
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:background="@drawable/background_view_rounded_single"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_gravity="center"
+                        android:layout_width="15dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_height="15dp"
+                        android:src="@drawable/ic_profile"/>
+
+                    <TextView
+                        android:layout_gravity="center"
+                        android:layout_marginStart="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:layout_weight="3"
+                        android:text="Edit user details"/>
+                    <ImageView
+                        android:id="@+id/userdetails"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_action_name"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:background="@drawable/background_view_rounded_single"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_gravity="center"
+                        android:layout_width="15dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_height="15dp"
+                        android:src="@drawable/ic_lock"/>
+
+                    <TextView
+                        android:layout_gravity="center"
+                        android:layout_marginStart="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:layout_weight="3"
+                        android:text="Change Password"/>
+                    <ImageView
+                        android:id="@+id/changepassword"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_action_name"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:background="@drawable/background_view_rounded_single"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_gravity="center"
+                        android:layout_width="15dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_height="15dp"
+                        android:src="@drawable/ic_email"/>
+                    <TextView
+                        android:layout_gravity="center"
+                        android:layout_marginStart="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:layout_weight="4"
+                        android:text="Edit Email"/>
+                    <ImageView
+                        android:id="@+id/editemail"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_action_name"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:background="@drawable/background_view_rounded_single"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_gravity="center"
+                        android:layout_width="15dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_height="15dp"
+                        android:src="@drawable/ic_subscription"/>
+                    <TextView
+                        android:layout_gravity="center"
+                        android:layout_marginStart="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:layout_weight="4"
+                        android:text="Subscriptions"/>
+                    <ImageView
+                        android:id="@+id/subscription_id"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_action_name"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:background="@drawable/background_view_rounded_single"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_gravity="center"
+                        android:layout_width="15dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_height="15dp"
+                        android:src="@drawable/ic_terms"/>
+                    <TextView
+                        android:layout_gravity="center"
+                        android:layout_marginStart="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:layout_weight="4"
+                        android:text="Terms and conditions"/>
+                    <ImageView
+                        android:id="@+id/termsandconditions"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_action_name"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:background="@drawable/background_view_rounded_single"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_gravity="center"
+                        android:layout_width="15dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_height="15dp"
+                        android:src="@drawable/ic_notification"/>
+                    <TextView
+                        android:layout_gravity="center"
+                        android:layout_marginStart="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:layout_weight="4"
+                        android:text="Notifications"/>
+                    <Switch
+                        android:id="@+id/not_switch"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:background="@drawable/background_view_rounded_single"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_gravity="center"
+                        android:layout_width="15dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_height="15dp"
+                        android:src="@drawable/ic_location_dark"/>
+                    <TextView
+                        android:layout_gravity="center"
+                        android:layout_marginStart="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:layout_weight="4"
+                        android:text="Location"/>
+                    <Switch
+                        android:id="@+id/loc_switch"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:background="@drawable/background_view_rounded_single"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_gravity="center"
+                        android:layout_width="15dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_height="15dp"
+                        android:src="@drawable/ic_phone"/>
+                    <TextView
+                        android:layout_gravity="center"
+                        android:layout_marginStart="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:layout_weight="4"
+                        android:text="Enable call"/>
+                    <Switch
+                        android:id="@+id/call_switch"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:background="@drawable/background_view_rounded_single"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_gravity="center"
+                        android:layout_width="20dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_logout"/>
+                    <TextView
+                        android:layout_gravity="center"
+                        android:layout_marginStart="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:layout_weight="4"
+                        android:text="Log out"/>
+                    <ImageView
+                        android:id="@+id/logout"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_action_name"/>
+                </LinearLayout>
+
+            </LinearLayout>
 
         </LinearLayout>
-
-    </LinearLayout>
-
-    <!-- title -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Safe Space"
-            android:id="@+id/title"/>
-
-    </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>
