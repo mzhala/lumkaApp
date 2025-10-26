@@ -18,7 +18,10 @@
     <color name="lightgrey">#DDDDDD</color>
     <color name="text_color">#F2F0EF</color>
 
-    <color name="text_highlight">#D9652C</color>
+    <color name="text_color_dark">#FF000000</color>
+    <color name="call_to_action_background">#C11C84</color>
+    <color name="text_highlight">#C11C84</color>
+    <!--<color name="text_highlight">#D9652C</color> -->
     <!--<color name="text_color">#BBF0AE</color> -->
     <color name="light_blue_600">#FF039BE5</color>
     <color name="light_blue_900">#FF01579B</color>

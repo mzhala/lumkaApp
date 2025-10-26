@@ -33,11 +33,11 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:text="Name:"
-                    android:textColor="@color/text_color"
-                    android:layout_marginBottom="5dp"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:text="Username:"
+                    android:textColor="@color/text_color" />
 
                 <EditText
                     android:padding="5dp"
@@ -57,11 +57,11 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:text="Email:"
-                    android:textColor="@color/text_color"
-                    android:layout_marginBottom="5dp"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:text="Email:"
+                    android:textColor="@color/text_color" />
 
                 <EditText
                     android:padding="5dp"
@@ -106,6 +106,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/button"
+                android:backgroundTint="@color/text_highlight"
+
                 android:onClick="registerUser"
                 android:text="Sign-Up"
                 android:textColor="@color/button_text"/>

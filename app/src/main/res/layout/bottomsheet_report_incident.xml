@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:clickable="false"
+    android:focusable="false"
+    android:background="@color/secondary_color">
+
+    <TextView
+        android:id="@+id/tvFormHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Report New Incident"
+        android:textSize="20sp"
+        android:textColor="@color/text_color"
+        android:gravity="center"
+        android:layout_marginBottom="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <!-- Title -->
+        <EditText
+            android:id="@+id/etTitle"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:hint="Enter incident Title"
+            android:padding="5dp"
+            android:background="@drawable/input"
+            android:imeOptions="actionDone"/>
+
+        <!-- Description -->
+        <EditText
+            android:id="@+id/etDescription"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:hint="Enter incident Description"
+            android:padding="5dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/input"
+            android:inputType="textMultiLine"
+            android:imeOptions="actionDone"/>
+
+        <!-- Location picker -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            android:background="@drawable/input"
+            android:paddingRight="10dp"
+            android:layout_marginTop="20dp">
+
+            <fragment
+                android:id="@+id/autocompleteFragment"
+                android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:background="@drawable/input"/>
+
+            <ImageButton
+                android:id="@+id/btnSelectLocation"
+                android:layout_width="20dp"
+                android:layout_height="match_parent"
+                android:contentDescription="Select on Map"
+                android:padding="12dp"
+                android:src="@drawable/ic_location_on"
+                android:background="@android:color/transparent"
+                app:tint="@color/quantum_grey"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Location: not set"
+            android:textColor="@color/lightgrey"
+            android:paddingTop="8dp"/>
+
+        <!-- Timestamp picker -->
+        <!-- Timestamp picker -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/input"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_marginTop="10dp">
+
+            <ImageButton
+                android:id="@+id/btnPickDateTime"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:contentDescription="Pick Date/Time"
+                android:src="@drawable/ic_calendar"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                app:tint="@color/background_color"
+                android:padding="8dp"/>
+
+            <TextView
+                android:id="@+id/tvTimestamp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:textSize="16sp"
+                android:paddingLeft="10dp"/>
+        </LinearLayout>
+
+
+
+
+        <!-- Submit button -->
+        <Button
+            android:id="@+id/btnSubmitIncident"
+            android:text="Report Incident"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/button_background_color"
+            android:backgroundTint="@color/text_highlight"
+            android:textColor="@color/button_text"/>
+    </LinearLayout>
+</LinearLayout>

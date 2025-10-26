@@ -3,6 +3,9 @@
     <style name="Base.Theme.BudgetTracker" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+
+        <!-- Set global font for the app -->
+        <item name="android:fontFamily">@font/poppins_regular</item>
     </style>
 
     <style name="Theme.BudgetTracker" parent="Base.Theme.BudgetTracker" />

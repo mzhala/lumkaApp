@@ -79,7 +79,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     // Fetch user info from Firebase and populate header
-    private fun fetchUserDetails() {
+    private fun fetchUserDetails() {0
         val userId = auth.currentUser?.uid ?: return
         val userRef = FirebaseDatabase.getInstance().getReference("users").child(userId)
         userRef.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -100,7 +100,7 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    // Optional: Helper function for fragments to update header dynamically
+    // Optional: Helper function for fragments to update header dyna11mically
     fun updateHeader(username: String, email: String) {
         tvDisplayName.text = username
         tvDisplayEmail.text = email
